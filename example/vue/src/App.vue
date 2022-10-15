@@ -7,8 +7,11 @@
       </h1>
       <div className="scroll-container" id="scroll-container">
         <ul>
-          <li v-for="(example, key) in examples" :key="key">
-            <a :href="`#${key}`" :class="{ active: isActive(key) }">
+          <li v-for="example in examples" :key="example.key">
+            <a
+              :href="`#${example.key}`"
+              :class="{ active: isActive(example.key) }"
+            >
               {{ example.name }}
             </a>
           </li>
@@ -19,14 +22,6 @@
       <h2>{{ getCurrentExample(current).name }}</h2>
       <ReadOnlyView v-if="current === 'read-only-view'" />
       <EditableView v-if="current === 'editable-view'" />
-      <el-tabs v-model="activeTab" @tab-click="handleClick">
-        <el-tab-pane label="Code" name="code">
-          <div className="code-viewer-title">{{ examples[current].code }}</div>
-          <CodeViewer :filename="`${examples[current].code}`"
-        /></el-tab-pane>
-        <el-tab-pane label="Less" name="less">Less</el-tab-pane>
-        <el-tab-pane label="Data" name="data">Data</el-tab-pane>
-      </el-tabs>
     </div>
   </div>
 </template>
@@ -34,7 +29,6 @@
 <script>
 import ReadOnlyView from "./cases/sample/ReadOnlyView.vue";
 import EditableView from "./cases/sample/EditableView.vue";
-import CodeViewer from "./CodeViewer.vue";
 import { ref } from "vue";
 
 export default {
@@ -42,21 +36,19 @@ export default {
   components: {
     ReadOnlyView,
     EditableView,
-    CodeViewer,
   },
   setup() {
-    const examples = {
-      "read-only-view": {
+    const examples = [
+      {
+        key: "read-only-view",
         name: "Read Only View",
-        code: "ReadOnlyView.vue",
       },
-      "editable-view": {
+      {
+        key: "editable-view",
         name: "Editable View",
-        code: "ReadOnlyView.vue",
       },
-    };
-    const current = ref("read-only-view");
-    const activeTab = ref("code");
+    ];
+    const current = ref(examples[0].key);
     window.onhashchange = () => {
       const key = window.location.hash.replace("#", "");
       current.value = key;
@@ -64,9 +56,8 @@ export default {
     return {
       examples,
       current,
-      activeTab,
       getCurrentExample(key) {
-        return examples[key];
+        return examples.find((example) => example.key === key);
       },
       isActive(key) {
         return current.value === key;
