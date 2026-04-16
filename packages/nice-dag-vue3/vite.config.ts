@@ -20,7 +20,8 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      insertTypesEntry: true
+      insertTypesEntry: true,
+      exclude: ['**/src/__tests__/**', 'vite.config.ts']
     })
   ]
 })

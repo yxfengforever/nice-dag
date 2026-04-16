@@ -12,8 +12,9 @@
       "require": "./lib/index.cjs"
     },
     "./lib/types": {
-      "import": "./lib/types.d.ts",
-      "require": "./lib/types.d.ts"
+      "types": "./lib/src/types.d.ts",
+      "import": "./lib/src/types.d.ts",
+      "require": "./lib/src/types.d.ts"
     }
   },
   "repository": "https://github.com/eBay/nice-dag",
@@ -69,8 +70,8 @@
     "ts-node": "^10.9.1",
     "typedoc": "^0.21.7",
     "typescript": "^4.3.5",
-    "vite": "^3.1.8",
-    "vite-plugin-dts": "^1.6.6"
+    "vite": "^5.4.18",
+    "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
     "@types/dagre": "^0.7.46",

@@ -20,7 +20,8 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      insertTypesEntry: true
+      insertTypesEntry: true,
+      exclude: ['**/src/__tests__/**', 'vite.config.ts', 'vite.config.umd.ts']
     })
   ]
 })

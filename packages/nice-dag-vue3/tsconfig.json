@@ -1,5 +1,5 @@
 {
-    "extends": "@vue/tsconfig/tsconfig.web.json",
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
     "include": [
         "env.d.ts",
         "src/**/*",
@@ -12,15 +12,15 @@
         "paths": {
             "@/*": [
                 "./src/*"
+            ],
+            "@ebay/nice-dag-core/lib/types": [
+                "../nice-dag-core/src/types.ts"
             ]
         },
-        "preserveValueImports": true,
-        "isolatedModules": true,
-        "importsNotUsedAsValues": "preserve"
+        "types": [
+            "vite/client"
+        ],
+        "noEmit": false,
+        "isolatedModules": true
     },
-    "references": [
-        {
-            "path": "./tsconfig.config.json"
-        }
-    ]
 }

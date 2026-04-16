@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import NiceDag from "@ebay/nice-dag-core";
-import NiceDagTypes from '@ebay/nice-dag-core/lib/types';
+import type * as NiceDagTypes from '@ebay/nice-dag-core/lib/types';
 
 export interface NiceDagReactiveType {
     id: string;

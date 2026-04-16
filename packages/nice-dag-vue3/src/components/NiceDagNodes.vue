@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import NiceDagTypes from "@ebay/nice-dag-core/lib/types";
+import type * as NiceDagTypes from "@ebay/nice-dag-core/lib/types";
 import type { NiceDagReactiveType } from "../niceDagReactive";
 import type { PropType } from "vue";
 

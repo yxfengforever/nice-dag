@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef, MutableRefObject, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import NiceDag from '@ebay/nice-dag-core';
-import NiceDagTypes, { IEdge, MinimapConfig } from '@ebay/nice-dag-core/lib/types';
+import type * as NiceDagTypes from '@ebay/nice-dag-core/lib/types';
+import type { IEdge, MinimapConfig } from '@ebay/nice-dag-core/lib/types';
 
 export type RenderNodeArgs = {
     niceDag: NiceDagTypes.NiceDag;

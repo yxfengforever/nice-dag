@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@ebay/nice-dag-core/lib/types": ["../nice-dag-core/src/types.ts"]
+    },
     "outDir": "lib/esm",
     "module": "esnext",
     "target": "es5",
