@@ -120,6 +120,7 @@ export interface EdgePoints {
 export type MapNodeToElement = (node: Node) => HTMLElement;
 export type MapNodeToDraggingElementClass = (node: Node) => StyleObjectType;
 export type MapEdgeToElement = (edge: IEdge) => HTMLElement;
+export type OnEdgeDropped = (sourceNode: IViewNode, targetNode: IViewNode) => void;
 export type MapEdgeToPoints = (edge: IEdge) => EdgePoints;
 export type GetViewElement = (node?: Node) => HTMLElement;
 export type GetNodeSize = (node: Node) => Size;
@@ -143,6 +144,7 @@ export interface NiceDagConfig {
     id?: string;
     mapNodeToElement?: MapNodeToElement;
     mapEdgeToElement?: MapEdgeToElement;
+    onEdgeDropped?: OnEdgeDropped;
     mapEdgeToPoints?: MapEdgeToPoints;
     getViewElement?: GetViewElement;
     getNodeSize: GetNodeSize;
@@ -167,7 +169,7 @@ export interface NiceDagConfig {
 export type ViewModelConfig = Pick<NiceDagConfig, 'rootViewPadding' | 'subViewPadding' | 'mode' | 'modelType' | 'edgeConnectorType' | 'jointEdgeConnectorType' | 'omitJointBeforeEnd'>;
 
 export type DagViewConfig = ViewModelConfig & Pick<NiceDagConfig,
-    'mapEdgeToPoints' | 'mapNodeToElement' | 'mapEdgeToElement' | 'getViewElement' | 'subViewPadding' | 'getGateElement' | 'getEdgeAttributes'>;
+    'mapEdgeToPoints' | 'mapNodeToElement' | 'mapEdgeToElement' | 'getViewElement' | 'subViewPadding' | 'getGateElement' | 'getEdgeAttributes' | 'onEdgeDropped'>;
 
 export interface NiceDagInitArgs extends NiceDagConfig {
     container: HTMLElement;
@@ -192,7 +194,7 @@ export interface IViewModel {
     removeEdge(edge: IEdge): void;
     findEdgesBySourceId(id: string): IEdge[];
     findEdgesByTargetId(id: string): IEdge[];
-    addEdge(source: IViewNode, target: IViewNode): void;
+    addEdge(source: IViewNode, target: IViewNode): IEdge;
     addNode(node: Node, point: Point): IViewNode;
     addNodes(nodes: Node[], point: Point, offset?: number): IViewNode[];
     subViewPadding: Padding;
@@ -205,13 +207,13 @@ export interface IViewNode extends Node, Bounds {
     withChildren: (promise: Promise<Node[]>, useCache?: boolean) => void;
     refresh?: () => void;
     remove?: () => void;
-    connect?: (node: IViewNode) => void;
+    connect?: (node: IViewNode) => IEdge;
     addNodeChangeListener: (listener: ViewNodeChangeListener) => void;
     removeNodeChangeListener: (listener: ViewNodeChangeListener) => void;
     removeDependency: (source: IViewNode) => void;
     doLayout: () => void;
     resize: (size: Size) => void;
-    addChildNode: (node: Node, point: Point) => Node;
+    addChildNode: (node: Node, point: Point, joint?: boolean) => Node;
     destory: () => void;
     fireNodeChange: (e: ViewNodeChangeEvent) => void;
     findEdgesAsSource(): IEdge[];

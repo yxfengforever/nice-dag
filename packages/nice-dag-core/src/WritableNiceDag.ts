@@ -11,6 +11,7 @@ import DndContext from "./dndContext";
 // import { resetBoundsWithRatio } from "./utils";
 import { EDITOR_BKG_CLS, SVG_BKG_ARROW_ID, SVG_BKG_CLS, SVG_DND_ARROW_ID, SVG_DND_CLS, ZERO_BOUNDS, EDITOR_FOREGROUND_CLS } from "./constants";
 import ViewModel from "./ViewModel";
+import Edge from "./Edge";
 
 const SVGNS = "http://www.w3.org/2000/svg";
 
@@ -196,6 +197,12 @@ export default class WritableNiceDag extends ReadOnlyNiceDag implements IDndProv
                 ...EDITOR_BACKGROUND_SIZE,
                 'z-index': 1
             }).svgElement;
+    }
+
+    onEdgeDropped(sourceNode: IViewNode, targetNode: IViewNode): void {
+        if (this._config.onEdgeDropped) {
+            this._config.onEdgeDropped(sourceNode, targetNode);
+        }
     }
 
     endNodeDragging(): void {
@@ -586,10 +593,10 @@ export default class WritableNiceDag extends ReadOnlyNiceDag implements IDndProv
     }
 
     getParentTopLeft(node: IViewNode): Point {
-        const bounds = node.ref.parentElement.getBoundingClientRect();
+        const bounds = node.ref?.parentElement?.getBoundingClientRect();
         return {
-            x: bounds.left,
-            y: bounds.top
+            x: bounds?.left,
+            y: bounds?.top
         }
     }
 
